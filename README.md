@@ -57,7 +57,7 @@ Ce projet consiste en une application backend développée avec Spring Boot pour
    spring.datasource.username=root
    spring.datasource.password=votre mot de passe
    spring.jpa.hibernate.ddl-auto=update
-   app.secret-key=munTYrK&E5hfd2466122323131sssssf888888888888sfdfdffffff555ffffsfs
+   app.secret-key=munTYrK&E5hfd2466122323131sssssf888888888888sfdfdffffff555ffffsfs 
    app.expiration-time=7200000 # Durée en millisecondes (2 heures)
    ```
 
