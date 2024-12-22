@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Component
 public class JwtUtils {
+
+    private final Set<String> blacklistedTokens = new HashSet<>();
     @Value("${app.secret-key}")
     private String secretKey;
 
@@ -73,5 +73,14 @@ public class JwtUtils {
                 .setSigningKey(getSignKey())
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+
+    public void invalidateToken(String token) {
+        blacklistedTokens.add(token);
+    }
+
+    public boolean isTokenInvalid(String token) {
+        return blacklistedTokens.contains(token);
     }
 }

@@ -3,6 +3,8 @@ package com.example.Insurance_backend.controller;
 import com.example.Insurance_backend.configuration.JwtUtils;
 import com.example.Insurance_backend.entity.User;
 import com.example.Insurance_backend.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin("*")
+//@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -65,6 +67,24 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
     }
+
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+
+        String authorizationHeader = request.getHeader("Authorization");
+
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+
+            jwtUtils.invalidateToken(token);
+
+            return ResponseEntity.ok("Logout successful");
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No token provided");
+    }
+
 
 }
 

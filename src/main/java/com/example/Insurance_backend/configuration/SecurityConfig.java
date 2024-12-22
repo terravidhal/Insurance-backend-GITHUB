@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -36,12 +37,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                                  .requestMatchers("/api/auth/**").permitAll()
 
-                                 .requestMatchers(HttpMethod.GET, "/api/insurances/**").hasRole("USER")
-                                 .requestMatchers(HttpMethod.GET, "/api/subscriptions/**").hasRole("USER")
-                                 .requestMatchers(HttpMethod.POST, "/api/subscriptions/**").hasRole("USER")
+                                 .requestMatchers(HttpMethod.GET, "/api/insurances/**").hasAnyRole("USER", "ADMIN")
+                                 .requestMatchers(HttpMethod.POST, "/api/insurances/**").hasRole("ADMIN")
+                                 .requestMatchers(HttpMethod.PATCH, "/api/insurances/**").hasRole("ADMIN")
+                                 .requestMatchers(HttpMethod.DELETE, "/api/insurances/**").hasRole("ADMIN")
 
-                                 .requestMatchers("/api/insurances/**").hasRole("ADMIN")
-                                 .requestMatchers("/api/subscriptions/**").hasRole("ADMIN")
+                                 .requestMatchers(HttpMethod.GET, "/api/subscriptions/**").hasAnyRole("USER", "ADMIN")
+                                 .requestMatchers(HttpMethod.POST, "/api/subscriptions/**").hasAnyRole("USER", "ADMIN")
+                                 .requestMatchers(HttpMethod.PATCH,"/api/subscriptions/**").hasRole("ADMIN")
+                                 .requestMatchers(HttpMethod.DELETE,"/api/subscriptions/**").hasRole("ADMIN")
+
                                  .requestMatchers("/api/users/**").hasRole("ADMIN")
 
                                 .anyRequest().authenticated())

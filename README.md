@@ -106,5 +106,24 @@ Ce projet consiste en une application backend développée avec Spring Boot pour
 - **src/main/resources** : Configuration et fichiers statiques
 
 
+## Configuration Cors
+prendre en compte cette configuration cors qui
+se trouve dans le fichier "jwtFilter.java"
+
+```bash
+   Configuration des en-têtes CORS
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            return;
+        }
+   ```
+ 
+
+
 
 
